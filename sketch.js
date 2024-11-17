@@ -6,9 +6,22 @@ function setup() {
 	world.gravity.y = 10;
 
 	bottomFloor = new Sprite(200, 600, 400, 10, 'static');
+	bottomFloor.color = 'green';
 
 	player = new Sprite(200, 570, 50, 50, 'dynamic');
 	player.rotationLock = true;
+
+	platforms = new Group();
+
+	for(let i = 0; i < 6; i++) {
+		let platform = new platforms.Sprite();
+		platform.w = 100;
+		platform.h = 10;
+		platform.x = random(0, 400);
+		platform.y = i * 100;
+		platform.collider = 'static';
+		platform.color = 'gray';
+	}
 }
 
 function draw() {
@@ -21,7 +34,7 @@ function draw() {
 		player.x += 5;
 	}
 
-	if (kb.pressed('up') && player.colliding(bottomFloor)) {
-		player.vel.y -= 10;
+	if (kb.presses('up') && player.colliding(bottomFloor) || kb.presses('up') && player.colliding(platforms)) {
+		player.vel.y -= 7;
 	}
 }
